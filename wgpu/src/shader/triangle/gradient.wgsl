@@ -71,7 +71,10 @@ fn gradient(
         if (curr_offset <= coord_offset && coord_offset <= next_offset) {
             let from_ = colors_arr[i];
             let to_ = colors_arr[i+1];
-            let factor = smoothstep(curr_offset, next_offset, coord_offset);
+            var factor = 1.0;
+            if (next_offset > curr_offset) {
+                factor = clamp((coord_offset - curr_offset) / (next_offset - curr_offset), 0.0, 1.0);
+            }
 
             color = interpolate_color(from_, to_, factor);
         }
